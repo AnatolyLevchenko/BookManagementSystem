@@ -12,6 +12,7 @@ public class BookService(BookManagementDbContext dbContext)
         return dbContext.Books
             .Select(x => new BookReadDto
             {
+                Id = x.Id,
                 Author = x.Author.Name,
                 Title = x.Title,
                 Year = x.Year,
@@ -26,6 +27,7 @@ public class BookService(BookManagementDbContext dbContext)
             .Where(x => x.Id == id)
             .Select(x => new BookReadDto
             {
+                Id = x.Id,
                 Author = x.Author.Name,
                 Title = x.Title,
                 Year = x.Year,

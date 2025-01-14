@@ -1,0 +1,45 @@
+﻿@page "/books"
+@using BookManagement.Shared
+@inject BookService BookService
+@inject NavigationManager NavigationManager
+
+<h3>Books List</h3>
+
+@if (_books == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <ul>
+        @foreach (var book in _books)
+        {
+            <li>
+                <a href="/books/@book.Id">@book.Title</a> - @book.Author
+                <button @onclick="() => DeleteBook(book.Id)">Delete</button>
+            </li>
+        }
+    </ul>
+}
+
+<button @onclick="NavigateToCreatePage">Create New Book</button>
+
+@code {
+    private IEnumerable<BookReadDto> _books;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _books = await BookService.GetAllBooksAsync();
+    }
+
+    private void NavigateToCreatePage()
+    {
+        NavigationManager.NavigateTo("/create-book");
+    }
+
+    private async Task DeleteBook(int id)
+    {
+        await BookService.DeleteBookAsync(id);
+        _books = await BookService.GetAllBooksAsync();
+    }
+}

@@ -1,0 +1,36 @@
+﻿@page "/books/{Id}"
+@using BookManagement.Shared
+@inject BookService BookService
+@inject NavigationManager NavigationManager
+
+<h3>Book Details</h3>
+
+@if (_book == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <p><strong>Title:</strong> @_book.Title</p>
+    <p><strong>Author:</strong> @_book.Author</p>
+    <p><strong>Genre:</strong> @_book.Genre</p>
+    <p><strong>Year:</strong> @_book.Year</p>
+}
+
+<button @onclick="GoBack">Back</button>
+
+@code {
+    [Parameter] public string Id { get; set; } = null!;
+
+    private BookReadDto? _book;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _book = await BookService.GetBookByIdAsync(Convert.ToInt32(Id));
+    }
+
+    private void GoBack()
+    {
+        NavigationManager.NavigateTo("/books");
+    }
+}

@@ -1,0 +1,88 @@
+﻿@page "/create-book"
+@using BookManagement.Shared
+@inject BookService BookService
+@inject NavigationManager NavigationManager
+
+<h3>Create New Book</h3>
+
+@if (authors == null || genres == null)
+{
+    <p>Loading authors and genres...</p>
+}
+else
+{
+    <EditForm Model="newBook" OnValidSubmit="HandleSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div>
+            <label for="title">Title:</label>
+            <InputText id="title" @bind-Value="newBook.Title" />
+        </div>
+
+        <div>
+            <label for="author">Author:</label>
+            <InputSelect id="author" @bind-Value="newBook.AuthorId">
+                @foreach (var author in authors)
+                {
+                    <option value="@author.Id">@author.Name</option>
+                }
+            </InputSelect>
+        </div>
+
+        <div>
+            <label for="genre">Genre:</label>
+            <InputSelect id="genre" @bind-Value="newBook.GenreId">
+                @foreach (var genre in genres)
+                {
+                    <option value="@genre.Id">@genre.Name</option>
+                }
+            </InputSelect>
+        </div>
+
+        <div>
+            <label for="year">Year:</label>
+            <InputNumber id="year" @bind-Value="newBook.Year" />
+        </div>
+
+        <button type="submit">Create Book</button>
+    </EditForm>
+}
+
+<button @onclick="GoBack">Back</button>
+
+@code {
+    private readonly BookCreateDto newBook = new();
+    private IEnumerable<AuthorDto> authors;
+    private IEnumerable<GenreDto> genres;
+
+    protected override async Task OnInitializedAsync()
+    {
+        authors = await BookService.GetAuthorsAsync();
+        genres = await BookService.GetGenresAsync();
+
+        // Set default selected values
+        if (authors.Any())
+        {
+            newBook.AuthorId = authors.First().Id;
+        }
+
+        if (genres.Any())
+        {
+            newBook.GenreId = genres.First().Id;
+        }
+
+        newBook.Year = DateTime.Now.Year;
+    }
+
+    private async Task HandleSubmit()
+    {
+        await BookService.CreateBookAsync(newBook);
+        NavigationManager.NavigateTo("/books");
+    }
+
+    private void GoBack()
+    {
+        NavigationManager.NavigateTo("/books");
+    }
+}

@@ -3,6 +3,8 @@ using BookManagement.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<BookService>();
+builder.Services.AddScoped<GenresService>();
+builder.Services.AddScoped<AuthorsService>();
 builder.Services.AddControllers();
 builder.Services.AddDbContext<BookManagementDbContext>(options =>
     options.UseInMemoryDatabase("BookManagementDb"));
