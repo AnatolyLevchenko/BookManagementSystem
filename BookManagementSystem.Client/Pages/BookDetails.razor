@@ -3,21 +3,28 @@
 @inject BookService BookService
 @inject NavigationManager NavigationManager
 
-<h3>Book Details</h3>
+<div class="card p-4 shadow-sm">
+    <h3 class="card-title mb-4 text-center">Book Details</h3>
 
-@if (_book == null)
-{
-    <p>Loading...</p>
-}
-else
-{
-    <p><strong>Title:</strong> @_book.Title</p>
-    <p><strong>Author:</strong> @_book.Author</p>
-    <p><strong>Genre:</strong> @_book.Genre</p>
-    <p><strong>Year:</strong> @_book.Year</p>
-}
+    @if (_book == null)
+    {
+        <p>Loading...</p>
+    }
+    else
+    {
+        <ul class="list-group">
+            <li class="list-group-item"><strong>Title:</strong> @_book.Title</li>
+            <li class="list-group-item"><strong>Author:</strong> @_book.Author</li>
+            <li class="list-group-item"><strong>Genre:</strong> @_book.Genre</li>
+            <li class="list-group-item"><strong>Year:</strong> @_book.Year</li>
+        </ul>
 
-<button @onclick="GoBack">Back</button>
+        <div class="d-flex justify-content-between mt-4">
+            <button @onclick="GoBack" class="btn btn-secondary">Back</button>
+            <button @onclick="NavigateToEditPage" class="btn btn-primary">Edit</button>
+        </div>
+    }
+</div>
 
 @code {
     [Parameter] public string Id { get; set; } = null!;
@@ -32,5 +39,10 @@ else
     private void GoBack()
     {
         NavigationManager.NavigateTo("/books");
+    }
+
+    private void NavigateToEditPage()
+    {
+        NavigationManager.NavigateTo($"/edit-book/{Id}");
     }
 }

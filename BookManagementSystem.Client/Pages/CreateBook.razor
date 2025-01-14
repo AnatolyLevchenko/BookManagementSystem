@@ -1,9 +1,9 @@
-﻿@page "/create-book"
+﻿@page "/edit-book/{Id?}"
 @using BookManagement.Shared
 @inject BookService BookService
 @inject NavigationManager NavigationManager
 
-<h3 class="mb-4">Create New Book</h3>
+<h3 class="mb-4">@((Id == null) ? "Create New Book" : "Edit Book")</h3>
 
 @if (authors == null || genres == null)
 {
@@ -11,18 +11,18 @@
 }
 else
 {
-    <EditForm Model="newBook" OnValidSubmit="HandleSubmit" class="card p-4 shadow-sm">
+    <EditForm Model="bookModel" OnValidSubmit="HandleSubmit" class="card p-4 shadow-sm">
         <DataAnnotationsValidator />
         <ValidationSummary />
 
         <div class="mb-3">
             <label for="title" class="form-label">Title:</label>
-            <InputText id="title" @bind-Value="newBook.Title" class="form-control" />
+            <InputText id="title" @bind-Value="bookModel.Title" class="form-control" />
         </div>
 
         <div class="mb-3">
             <label for="author" class="form-label">Author:</label>
-            <InputSelect id="author" @bind-Value="newBook.AuthorId" class="form-select">
+            <InputSelect id="author" @bind-Value="bookModel.AuthorId" class="form-select">
                 @foreach (var author in authors)
                 {
                     <option value="@author.Id">@author.Name</option>
@@ -32,7 +32,7 @@ else
 
         <div class="mb-3">
             <label for="genre" class="form-label">Genre:</label>
-            <InputSelect id="genre" @bind-Value="newBook.GenreId" class="form-select">
+            <InputSelect id="genre" @bind-Value="bookModel.GenreId" class="form-select">
                 @foreach (var genre in genres)
                 {
                     <option value="@genre.Id">@genre.Name</option>
@@ -42,43 +42,63 @@ else
 
         <div class="mb-3">
             <label for="year" class="form-label">Year:</label>
-            <InputNumber id="year" @bind-Value="newBook.Year" class="form-control" />
+            <InputNumber id="year" @bind-Value="bookModel.Year" class="form-control" />
         </div>
 
         <div class="d-flex justify-content-between">
-            <button type="submit" class="btn btn-success">Create Book</button>
+            <button type="submit" class="btn btn-success">@((Id == null) ? "Create Book" : "Update Book")</button>
             <button @onclick="GoBack" class="btn btn-secondary">Back</button>
         </div>
     </EditForm>
 }
 
 @code {
-    private readonly BookCreateDto newBook = new();
-    private IEnumerable<AuthorDto> authors;
-    private IEnumerable<GenreDto> genres;
+    [Parameter] public string? Id { get; set; }
+
+    private BookCreateDto bookModel = new();
+    private IEnumerable<AuthorDto>? authors;
+    private IEnumerable<GenreDto>? genres;
 
     protected override async Task OnInitializedAsync()
     {
         authors = await BookService.GetAuthorsAsync();
         genres = await BookService.GetGenresAsync();
 
-        // Set default selected values
-        if (authors.Any())
+        if (Id != null)
         {
-            newBook.AuthorId = authors.First().Id;
+            // Editing an existing book
+            var existingBook = await BookService.GetBookByIdAsync(Convert.ToInt32(Id));
+            if (existingBook != null)
+            {
+                bookModel = new BookCreateDto
+                    {
+                        Title = existingBook.Title,
+                        AuthorId = existingBook.AuthorId,
+                        GenreId = existingBook.GenreId,
+                        Year = existingBook.Year
+                    };
+            }
         }
-
-        if (genres.Any())
+        else
         {
-            newBook.GenreId = genres.First().Id;
+            // Creating a new book, set default values
+            bookModel.AuthorId = authors.FirstOrDefault()?.Id ?? 0;
+            bookModel.GenreId = genres.FirstOrDefault()?.Id ?? 0;
+            bookModel.Year = DateTime.Now.Year;
         }
-
-        newBook.Year = DateTime.Now.Year;
     }
 
     private async Task HandleSubmit()
     {
-        await BookService.CreateBookAsync(newBook);
+        if (Id == null)
+        {
+            await BookService.CreateBookAsync(bookModel);
+        }
+        else
+        {
+            await BookService.UpdateBookAsync(Convert.ToInt32(Id), bookModel);
+        }
+
         NavigationManager.NavigateTo("/books");
     }
 

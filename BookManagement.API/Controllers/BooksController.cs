@@ -38,7 +38,7 @@ public class BooksController(BookService bookService) : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(int id, [FromBody] Book? updatedBook)
+    public async Task<IActionResult> Update(int id, [FromBody] BookUpdateDto? updatedBook)
     {
         if (updatedBook == null)
             return BadRequest();

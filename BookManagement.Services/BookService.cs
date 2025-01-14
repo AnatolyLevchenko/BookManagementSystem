@@ -17,7 +17,9 @@ public class BookService(BookManagementDbContext dbContext)
                 Author = x.Author.Name,
                 Title = x.Title,
                 Year = x.Year,
-                Genre = x.Genre.Name
+                Genre = x.Genre.Name,
+                AuthorId = x.AuthorId,
+                GenreId = x.GenreId
             })
             .FirstOrDefaultAsync();
 
@@ -37,13 +39,14 @@ public class BookService(BookManagementDbContext dbContext)
         return entity;
     }
 
-    public async Task UpdateBook(int id, Book updatedBook)
+    public async Task UpdateBook(int id, BookUpdateDto updatedBook)
     {
         var existingBook = await dbContext.Books.FindAsync(id);
         if (existingBook != null)
         {
             existingBook.Title = updatedBook.Title;
-            existingBook.Author = updatedBook.Author;
+            existingBook.AuthorId = updatedBook.AuthorId;
+            existingBook.GenreId = updatedBook.GenreId;
             existingBook.Year = updatedBook.Year;
             await dbContext.SaveChangesAsync();
         }
@@ -85,7 +88,9 @@ public class BookService(BookManagementDbContext dbContext)
                 Title = b.Title,
                 Author = b.Author.Name,
                 Genre = b.Genre.Name,
-                Year = b.Year
+                Year = b.Year,
+                AuthorId = b.AuthorId,
+                GenreId = b.GenreId
             })
             .ToListAsync();
 

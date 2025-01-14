@@ -22,7 +22,9 @@ else
             {
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     <div>
-                        <a href="/books/@book.Id">@book.Title</a> - @book.Author <span class="badge bg-info">@book.Genre</span>
+                        <a href="/books/@book.Id">@book.Title</a> - @book.Author
+                        <span class="badge bg-info">@book.Genre</span>
+                        <span class="badge bg-secondary">@book.Year</span>
                     </div>
                     <button @onclick="() => DeleteBook(book.Id)" class="btn btn-danger btn-sm">Delete</button>
                 </li>
@@ -89,7 +91,7 @@ else
 
     private void NavigateToCreatePage()
     {
-        NavigationManager.NavigateTo("/create-book");
+        NavigationManager.NavigateTo("/edit-book");
     }
 
     private async Task PreviousPage()
