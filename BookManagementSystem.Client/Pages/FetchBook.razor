@@ -1,0 +1,28 @@
+﻿@page "/fetch-books"
+@inject HttpClient Http
+@using BookManagement.Shared
+
+<h3>Books</h3>
+
+<ul>
+    @if (_books == null)
+    {
+        <li>Loading...</li>
+    }
+    else
+    {
+        @foreach (var book in _books)
+        {
+            <li>@book.Title by @book.Author (@book.Year)</li>
+        }
+    }
+</ul>
+
+@code {
+    private List<Book>? _books;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _books = await Http.GetFromJsonAsync<List<Book>>("api/Books");
+    }
+}
