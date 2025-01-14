@@ -3,7 +3,7 @@
 @inject BookService BookService
 @inject NavigationManager NavigationManager
 
-<h3>Create New Book</h3>
+<h3 class="mb-4">Create New Book</h3>
 
 @if (authors == null || genres == null)
 {
@@ -11,18 +11,18 @@
 }
 else
 {
-    <EditForm Model="newBook" OnValidSubmit="HandleSubmit">
+    <EditForm Model="newBook" OnValidSubmit="HandleSubmit" class="card p-4 shadow-sm">
         <DataAnnotationsValidator />
         <ValidationSummary />
 
-        <div>
-            <label for="title">Title:</label>
-            <InputText id="title" @bind-Value="newBook.Title" />
+        <div class="mb-3">
+            <label for="title" class="form-label">Title:</label>
+            <InputText id="title" @bind-Value="newBook.Title" class="form-control" />
         </div>
 
-        <div>
-            <label for="author">Author:</label>
-            <InputSelect id="author" @bind-Value="newBook.AuthorId">
+        <div class="mb-3">
+            <label for="author" class="form-label">Author:</label>
+            <InputSelect id="author" @bind-Value="newBook.AuthorId" class="form-select">
                 @foreach (var author in authors)
                 {
                     <option value="@author.Id">@author.Name</option>
@@ -30,9 +30,9 @@ else
             </InputSelect>
         </div>
 
-        <div>
-            <label for="genre">Genre:</label>
-            <InputSelect id="genre" @bind-Value="newBook.GenreId">
+        <div class="mb-3">
+            <label for="genre" class="form-label">Genre:</label>
+            <InputSelect id="genre" @bind-Value="newBook.GenreId" class="form-select">
                 @foreach (var genre in genres)
                 {
                     <option value="@genre.Id">@genre.Name</option>
@@ -40,16 +40,17 @@ else
             </InputSelect>
         </div>
 
-        <div>
-            <label for="year">Year:</label>
-            <InputNumber id="year" @bind-Value="newBook.Year" />
+        <div class="mb-3">
+            <label for="year" class="form-label">Year:</label>
+            <InputNumber id="year" @bind-Value="newBook.Year" class="form-control" />
         </div>
 
-        <button type="submit">Create Book</button>
+        <div class="d-flex justify-content-between">
+            <button type="submit" class="btn btn-success">Create Book</button>
+            <button @onclick="GoBack" class="btn btn-secondary">Back</button>
+        </div>
     </EditForm>
 }
-
-<button @onclick="GoBack">Back</button>
 
 @code {
     private readonly BookCreateDto newBook = new();

@@ -5,31 +5,86 @@
 
 <h3>Books List</h3>
 
+<div>
+    <input type="text" @bind="searchTerm" placeholder="Search by title..." class="form-control mb-3" />
+    <button @onclick="SearchBooks" class="btn btn-primary mb-3 ms-2">Search</button>
+</div>
+
 @if (_books == null)
 {
     <p>Loading...</p>
 }
 else
 {
-    <ul>
-        @foreach (var book in _books)
-        {
-            <li>
-                <a href="/books/@book.Id">@book.Title</a> - @book.Author
-                <button @onclick="() => DeleteBook(book.Id)">Delete</button>
-            </li>
-        }
-    </ul>
+    <div>
+        <ul class="list-group">
+            @foreach (var book in _books)
+            {
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <a href="/books/@book.Id">@book.Title</a> - @book.Author <span class="badge bg-info">@book.Genre</span>
+                    </div>
+                    <button @onclick="() => DeleteBook(book.Id)" class="btn btn-danger btn-sm">Delete</button>
+                </li>
+            }
+        </ul>
+    </div>
+
+    <div class="pagination-container mt-4">
+        <button @onclick="PreviousPage" class="btn btn-primary" disabled="@(_currentPage == 1)">Previous</button>
+        <span>Page @_currentPage of @totalPages</span>
+        <button @onclick="NextPage" class="btn btn-primary" disabled="@(_currentPage == totalPages)">Next</button>
+    </div>
 }
 
-<button @onclick="NavigateToCreatePage">Create New Book</button>
+<button @onclick="NavigateToCreatePage" class="btn btn-success mt-3">Create New Book</button>
 
 @code {
     private IEnumerable<BookReadDto> _books;
+    private string searchTerm = string.Empty;
+    private int _currentPage = 1;
+    private int pageSize = 5;
+    private int totalPages = 1;
+
+    private System.Timers.Timer _searchTimer;
 
     protected override async Task OnInitializedAsync()
     {
-        _books = await BookService.GetAllBooksAsync();
+        await LoadBooks();
+        _searchTimer = new System.Timers.Timer(500); // Set the delay to 500 milliseconds
+        _searchTimer.Elapsed += OnSearchTimerElapsed;
+        _searchTimer.AutoReset = false;
+        _searchTimer.Start();
+    }
+
+    private async Task LoadBooks()
+    {
+        var result = await BookService.GetBooksPaginatedAsync(_currentPage, pageSize, searchTerm);
+        _books = result.Items;
+        totalPages = result.TotalPages;
+    }
+
+    private async Task SearchBooks()
+    {
+        _currentPage = 1;
+        await LoadBooks();
+    }
+
+    private async Task OnSearchTermChanged()
+    {
+        _searchTimer.Stop();
+        _searchTimer.Start();
+    }
+
+    private async void OnSearchTimerElapsed(object source, System.Timers.ElapsedEventArgs e)
+    {
+        await LoadBooks();
+    }
+
+    private async Task DeleteBook(int id)
+    {
+        await BookService.DeleteBookAsync(id);
+        await LoadBooks();
     }
 
     private void NavigateToCreatePage()
@@ -37,9 +92,21 @@ else
         NavigationManager.NavigateTo("/create-book");
     }
 
-    private async Task DeleteBook(int id)
+    private async Task PreviousPage()
     {
-        await BookService.DeleteBookAsync(id);
-        _books = await BookService.GetAllBooksAsync();
+        if (_currentPage > 1)
+        {
+            _currentPage--;
+            await LoadBooks();
+        }
+    }
+
+    private async Task NextPage()
+    {
+        if (_currentPage < totalPages)
+        {
+            _currentPage++;
+            await LoadBooks();
+        }
     }
 }

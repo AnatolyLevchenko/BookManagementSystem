@@ -11,6 +11,14 @@
     {
       "Id": 3,
       "Name": "George R.R. Martin"
+    },
+    {
+      "Id": 4,
+      "Name": "Agatha Christie"
+    },
+    {
+      "Id": 5,
+      "Name": "J.R.R. Tolkien"
     }
   ],
   "genres": [
@@ -21,6 +29,14 @@
     {
       "Id": 2,
       "Name": "Fantasy"
+    },
+    {
+      "Id": 3,
+      "Name": "Mystery"
+    },
+    {
+      "Id": 4,
+      "Name": "Adventure"
     }
   ],
   "books": [
@@ -57,7 +73,112 @@
       "Title": "The Hobbit",
       "Year": 1937,
       "GenreId": 2,
+      "AuthorId": 5
+    },
+    {
+      "Id": 6,
+      "Title": "Misery",
+      "Year": 1987,
+      "GenreId": 1,
+      "AuthorId": 1
+    },
+    {
+      "Id": 7,
+      "Title": "The Da Vinci Code",
+      "Year": 2003,
+      "GenreId": 3,
+      "AuthorId": 4
+    },
+    {
+      "Id": 8,
+      "Title": "The Fellowship of the Ring",
+      "Year": 1954,
+      "GenreId": 2,
+      "AuthorId": 5
+    },
+    {
+      "Id": 9,
+      "Title": "The Winds of Winter",
+      "Year": 2021,
+      "GenreId": 2,
+      "AuthorId": 3
+    },
+    {
+      "Id": 10,
+      "Title": "Harry Potter and the Chamber of Secrets",
+      "Year": 1998,
+      "GenreId": 2,
       "AuthorId": 2
+    },
+    {
+      "Id": 11,
+      "Title": "The Girl with the Dragon Tattoo",
+      "Year": 2005,
+      "GenreId": 3,
+      "AuthorId": 4
+    },
+    {
+      "Id": 12,
+      "Title": "It",
+      "Year": 1986,
+      "GenreId": 1,
+      "AuthorId": 1
+    },
+    {
+      "Id": 13,
+      "Title": "The Return of the King",
+      "Year": 1955,
+      "GenreId": 2,
+      "AuthorId": 5
+    },
+    {
+      "Id": 14,
+      "Title": "And Then There Were None",
+      "Year": 1939,
+      "GenreId": 3,
+      "AuthorId": 4
+    },
+    {
+      "Id": 15,
+      "Title": "Pet Sematary",
+      "Year": 1983,
+      "GenreId": 1,
+      "AuthorId": 1
+    },
+    {
+      "Id": 16,
+      "Title": "The Two Towers",
+      "Year": 1954,
+      "GenreId": 2,
+      "AuthorId": 5
+    },
+    {
+      "Id": 17,
+      "Title": "The Cuckoo's Calling",
+      "Year": 2013,
+      "GenreId": 3,
+      "AuthorId": 4
+    },
+    {
+      "Id": 18,
+      "Title": "Salem's Lot",
+      "Year": 1975,
+      "GenreId": 1,
+      "AuthorId": 1
+    },
+    {
+      "Id": 19,
+      "Title": "The Goblet of Fire",
+      "Year": 2000,
+      "GenreId": 2,
+      "AuthorId": 2
+    },
+    {
+      "Id": 20,
+      "Title": "The Silmarillion",
+      "Year": 1977,
+      "GenreId": 2,
+      "AuthorId": 5
     }
   ]
 }

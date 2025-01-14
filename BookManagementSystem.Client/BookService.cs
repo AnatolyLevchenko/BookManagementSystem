@@ -1,14 +1,10 @@
 ﻿using System.Net.Http.Json;
 using BookManagement.Shared;
+using static System.Net.WebRequestMethods;
 
 namespace BookManagementSystem.Client;
 public class BookService(HttpClient httpClient)
 {
-    public async Task<IEnumerable<BookReadDto>> GetAllBooksAsync()
-    {
-        return (await httpClient.GetFromJsonAsync<IEnumerable<BookReadDto>>("api/books"))!;
-    }
-
     public async Task<BookReadDto> GetBookByIdAsync(int id)
     {
         return (await httpClient.GetFromJsonAsync<BookReadDto>($"api/books/{id}"))!;
@@ -37,5 +33,11 @@ public class BookService(HttpClient httpClient)
     public async Task<IEnumerable<GenreDto>> GetGenresAsync()
     {
         return (await httpClient.GetFromJsonAsync<IEnumerable<GenreDto>>("api/genres"))!;
+    }
+
+    public async Task<PagedResult<BookReadDto>> GetBooksPaginatedAsync(int page, int pageSize, string searchTerm)
+    {
+        var queryString = $"?page={page}&pageSize={pageSize}&searchTerm={searchTerm}";
+        return (await httpClient.GetFromJsonAsync<PagedResult<BookReadDto>>($"api/books{queryString}"))!;
     }
 }

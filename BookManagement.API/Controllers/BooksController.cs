@@ -10,11 +10,13 @@ namespace BookManagement.API.Controllers;
 [Route("api/[controller]")]
 public class BooksController(BookService bookService) : ControllerBase
 {
+    
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<BookReadDto>>> GetAll()
+    public async Task<IActionResult> GetPagedList(int page, int pageSize, string? searchTerm)
     {
-        return Ok(await bookService.GetAllBooks());
+        return Ok(await bookService.GetPagedList(page, pageSize, searchTerm));
     }
+
 
     [HttpGet("{id}")]
     public async Task<ActionResult<BookReadDto>> GetById(int id)
