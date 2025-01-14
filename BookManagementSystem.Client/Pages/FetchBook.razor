@@ -2,7 +2,7 @@
 @inject HttpClient Http
 @using BookManagement.Shared
 
-<h3>Books</h3>
+<h3>BookReadDtos</h3>
 
 <ul>
     @if (_books == null)
@@ -19,10 +19,10 @@
 </ul>
 
 @code {
-    private List<Book>? _books;
+    private List<BookReadDto>? _books;
 
     protected override async Task OnInitializedAsync()
     {
-        _books = await Http.GetFromJsonAsync<List<Book>>("api/Books");
+        _books = await Http.GetFromJsonAsync<List<BookReadDto>>("api/Books");
     }
 }

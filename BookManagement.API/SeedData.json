@@ -1,0 +1,63 @@
+{
+  "authors": [
+    {
+      "Id": 1,
+      "Name": "Stephen King"
+    },
+    {
+      "Id": 2,
+      "Name": "J.K. Rowling"
+    },
+    {
+      "Id": 3,
+      "Name": "George R.R. Martin"
+    }
+  ],
+  "genres": [
+    {
+      "Id": 1,
+      "Name": "Horror"
+    },
+    {
+      "Id": 2,
+      "Name": "Fantasy"
+    }
+  ],
+  "books": [
+    {
+      "Id": 1,
+      "Title": "Carrie",
+      "Year": 1974,
+      "GenreId": 1,
+      "AuthorId": 1
+    },
+    {
+      "Id": 2,
+      "Title": "Harry Potter and the Sorcerer's Stone",
+      "Year": 1997,
+      "GenreId": 2,
+      "AuthorId": 2
+    },
+    {
+      "Id": 3,
+      "Title": "A Game of Thrones",
+      "Year": 1996,
+      "GenreId": 2,
+      "AuthorId": 3
+    },
+    {
+      "Id": 4,
+      "Title": "The Shining",
+      "Year": 1977,
+      "GenreId": 1,
+      "AuthorId": 1
+    },
+    {
+      "Id": 5,
+      "Title": "The Hobbit",
+      "Year": 1937,
+      "GenreId": 2,
+      "AuthorId": 2
+    }
+  ]
+}

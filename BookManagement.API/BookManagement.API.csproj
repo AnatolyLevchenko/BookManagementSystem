@@ -7,10 +7,23 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+    <Content Remove="SeedData.json" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="SeedData.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BookManagement.Infrastructure\BookManagement.Infrastructure.csproj" />
+    <ProjectReference Include="..\BookManagement.Services\BookManagement.Services.csproj" />
     <ProjectReference Include="..\BookManagement.Shared\BookManagement.Shared.csproj" />
   </ItemGroup>
 

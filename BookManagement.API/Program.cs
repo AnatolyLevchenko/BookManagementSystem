@@ -1,5 +1,11 @@
+using BookManagement.Infrastructure.Seed;
+using BookManagement.Services;
+
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddScoped<BookService>();
 builder.Services.AddControllers();
+builder.Services.AddDbContext<BookManagementDbContext>(options =>
+    options.UseInMemoryDatabase("BookManagementDb"));
 
 builder.Services.AddCors(options =>
 {
@@ -14,13 +20,15 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
-app.UseCors();
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
 
+using (var scope = app.Services.CreateAsyncScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<BookManagementDbContext>();
+    DbMigrator.Migrate(dbContext);
+}
+app.UseCors();
+app.UseSwagger();
+app.UseSwaggerUI();
 app.UseAuthorization();
 app.MapControllers();
 app.Run();

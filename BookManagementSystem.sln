@@ -9,6 +9,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookManagement.Shared", "Bo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookManagementSystem.Client", "BookManagementSystem.Client\BookManagementSystem.Client.csproj", "{0D2C03B9-C00F-4D11-ACF7-E4335E4F43CD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookManagement.Domain", "BookManagement.Domain\BookManagement.Domain.csproj", "{0A0B4B42-AA1C-41D1-9480-9EB77D9D5E94}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookManagement.Infrastructure", "BookManagement.Infrastructure\BookManagement.Infrastructure.csproj", "{AFDBCBB0-7259-4615-A127-21A1E51B1146}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookManagement.Services", "BookManagement.Services\BookManagement.Services.csproj", "{E61A8760-9278-4623-B0C6-AFE0DDC87B85}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +33,18 @@ Global
 		{0D2C03B9-C00F-4D11-ACF7-E4335E4F43CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0D2C03B9-C00F-4D11-ACF7-E4335E4F43CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0D2C03B9-C00F-4D11-ACF7-E4335E4F43CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A0B4B42-AA1C-41D1-9480-9EB77D9D5E94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A0B4B42-AA1C-41D1-9480-9EB77D9D5E94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A0B4B42-AA1C-41D1-9480-9EB77D9D5E94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A0B4B42-AA1C-41D1-9480-9EB77D9D5E94}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AFDBCBB0-7259-4615-A127-21A1E51B1146}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFDBCBB0-7259-4615-A127-21A1E51B1146}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFDBCBB0-7259-4615-A127-21A1E51B1146}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFDBCBB0-7259-4615-A127-21A1E51B1146}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E61A8760-9278-4623-B0C6-AFE0DDC87B85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E61A8760-9278-4623-B0C6-AFE0DDC87B85}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E61A8760-9278-4623-B0C6-AFE0DDC87B85}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E61A8760-9278-4623-B0C6-AFE0DDC87B85}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
