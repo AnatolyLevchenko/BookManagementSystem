@@ -39,3 +39,5 @@ app.MapGet("/", context =>
     return Task.CompletedTask;
 });
 app.Run();
+
+public partial class Program { }

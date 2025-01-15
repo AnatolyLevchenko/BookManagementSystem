@@ -34,7 +34,7 @@ public class BooksController(BookService bookService) : ControllerBase
             return BadRequest();
 
         var createdBook = await bookService.CreateBook(book);
-        return CreatedAtAction(nameof(GetById), new { id = createdBook.Id }, book);
+        return CreatedAtAction(nameof(GetById), new { id = createdBook.Id }, createdBook);
     }
 
     [HttpPut("{id}")]

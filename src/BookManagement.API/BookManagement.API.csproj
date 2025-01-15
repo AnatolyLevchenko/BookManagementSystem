@@ -27,4 +27,8 @@
     <ProjectReference Include="..\BookManagement.Shared\BookManagement.Shared.csproj" />
   </ItemGroup>
 
+	<ItemGroup>
+		<InternalsVisibleTo Include="BookManagement.Tests" />
+	</ItemGroup>
+
 </Project>

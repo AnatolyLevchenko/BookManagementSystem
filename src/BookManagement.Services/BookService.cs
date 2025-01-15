@@ -25,18 +25,34 @@ public class BookService(BookManagementDbContext dbContext)
 
     }
 
-    public async Task<Book> CreateBook(BookCreateDto book)
+    public async Task<BookReadDto> CreateBook(BookCreateDto book)
     {
-        var entity = new Book
+        var createdBook = new Book
         {
             Title = book.Title,
             Year = book.Year,
             AuthorId = book.AuthorId,
             GenreId = book.GenreId
         };
-        await dbContext.Books.AddAsync(entity);
+        await dbContext.Books.AddAsync(createdBook);
         await dbContext.SaveChangesAsync();
-        return entity;
+
+        var bookWithRelations = await dbContext.Books.
+            Include(b => b.Author)
+            .Include(b => b.Genre)
+            .FirstAsync(b => b.Id == createdBook.Id);
+
+        var bookReadDto = new BookReadDto
+        {
+            Id = bookWithRelations.Id,
+            Title = bookWithRelations.Title,
+            Author = bookWithRelations.Author.Name,
+            Year = bookWithRelations.Year,
+            Genre = bookWithRelations.Genre.Name,
+            AuthorId = bookWithRelations.AuthorId,
+            GenreId = bookWithRelations.GenreId
+        };
+        return bookReadDto;
     }
 
     public async Task UpdateBook(int id, BookUpdateDto updatedBook)
@@ -76,7 +92,7 @@ public class BookService(BookManagementDbContext dbContext)
         var totalItems = await query.CountAsync();
 
         // Apply sorting to ensure consistent data order across pages
-        query = query.OrderBy(b => b.Title); 
+        query = query.OrderBy(b => b.Title);
 
         // Apply pagination
         var books = await query
