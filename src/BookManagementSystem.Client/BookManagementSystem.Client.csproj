@@ -21,4 +21,10 @@
     </Content>
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="script.sh">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

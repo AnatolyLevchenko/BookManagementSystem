@@ -19,7 +19,6 @@ FROM nginx:alpine AS final
 WORKDIR /usr/share/nginx/html
 
 RUN apk add jq
-RUN apk add nano
 COPY ["BookManagementSystem.Client/script.sh", "/docker-entrypoint.d/35-script.sh"]
 RUN chmod +x /docker-entrypoint.d/35-script.sh
 
